@@ -1,0 +1,23 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+
+// Creates a trailing stop technique using the high or low of a certain number of past candles.
+// The numberOfCandles input allows the user to specify how many past candles to use in the calculation.
+// The sellShort variable is calculated using the highest function, which gets the highest value in a series 
+// over a specified number of past candles. In this case, the series is high and the number of past candles 
+// is numberOfCandles. The buyLong variable is calculated using the lowest function, which gets the lowest 
+// value in a series over a specified number of past candles. In this case, the series is low and the number
+// of past candles is numberOfCandles. The sellShort and buyLong values are plotted on the chart using the plot function.
+
+//@version=5
+indicator(title="X Candle High / X Candle Low Trailing Stop Technique", shorttitle="Candle High/Low Trailing Stop", overlay=true)
+
+// Add a script parameter to specify the number of closed candles.
+numberOfCandles = input.int(defval=3, title="Number of Closed Candles")
+
+// Calculate the high and low prices of the wick of the specified number of candles
+highX = ta.highest(high, numberOfCandles)[1]
+lowX = ta.lowest(low, numberOfCandles)[1]
+
+// Plot the high and low prices on the chart
+plot(highX, "Sell/Short", color=color.red, linewidth=2)
+plot(lowX, "Buy/Long", color=color.green, linewidth=2)
